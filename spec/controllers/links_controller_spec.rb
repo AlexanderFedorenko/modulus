@@ -53,89 +53,15 @@ RSpec.describe LinksController, type: :controller do
   describe 'GET #show' do
     it 'returns a success response' do
       link = Link.create! valid_attributes
-      get :show, params: { id: link.to_param }, session: valid_session
-      expect(response).to be_success
+      get :show, params: { id: link.to_param }
+      expect(response).to be_successful
     end
   end
 
   describe 'GET #new' do
     it 'returns a success response' do
-      get :new, params: {}, session: valid_session
-      expect(response).to be_success
-    end
-  end
-
-  describe 'GET #edit' do
-    it 'returns a success response' do
-      link = Link.create! valid_attributes
-      get :edit, params: { id: link.to_param }, session: valid_session
-      expect(response).to be_success
-    end
-  end
-
-  describe 'POST #create' do
-    context 'with valid params' do
-      it 'creates a new Link' do
-        expect do
-          post :create, params: { link: valid_attributes }, session: valid_session
-        end.to change(Link, :count).by(1)
-      end
-
-      it 'redirects to the created link' do
-        post :create, params: { link: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(Link.last)
-      end
-    end
-
-    context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { link: invalid_attributes }, session: valid_session
-        expect(response).to be_success
-      end
-    end
-  end
-
-  describe 'PUT #update' do
-    context 'with valid params' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
-
-      it 'updates the requested link' do
-        link = Link.create! valid_attributes
-        put :update, params: { id: link.to_param, link: new_attributes }, session: valid_session
-        link.reload
-        skip('Add assertions for updated state')
-      end
-
-      it 'redirects to the link' do
-        link = Link.create! valid_attributes
-        put :update, params: { id: link.to_param, link: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(link)
-      end
-    end
-
-    context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        link = Link.create! valid_attributes
-        put :update, params: { id: link.to_param, link: invalid_attributes }, session: valid_session
-        expect(response).to be_success
-      end
-    end
-  end
-
-  describe 'DELETE #destroy' do
-    it 'destroys the requested link' do
-      link = Link.create! valid_attributes
-      expect do
-        delete :destroy, params: { id: link.to_param }, session: valid_session
-      end.to change(Link, :count).by(-1)
-    end
-
-    it 'redirects to the links list' do
-      link = Link.create! valid_attributes
-      delete :destroy, params: { id: link.to_param }, session: valid_session
-      expect(response).to redirect_to(links_url)
+      get :new, params: {}
+      expect(response).to be_successful
     end
   end
 end
