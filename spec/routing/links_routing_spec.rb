@@ -15,5 +15,9 @@ RSpec.describe LinksController, type: :routing do
     it 'routes to #create' do
       expect(post: '/links').to route_to('links#create')
     end
+
+    it 'routes to #visit' do
+      expect(get: '/J0MKKA').to route_to('links#visit', short_url: 'J0MKKA')
+    end
   end
 end
