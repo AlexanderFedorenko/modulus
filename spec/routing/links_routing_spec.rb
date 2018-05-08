@@ -9,7 +9,7 @@ RSpec.describe LinksController, type: :routing do
     end
 
     it 'routes to #show' do
-      expect(get: '/links/1').to route_to('links#show', id: '1')
+      expect(get: '/links/J0MKKA').to route_to('links#show', short_url: 'J0MKKA')
     end
 
     it 'routes to #create' do

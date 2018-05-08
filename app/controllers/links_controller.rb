@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class LinksController < ApplicationController
-  before_action :set_link, only: [:show]
-
   # GET /links/1
   def show
+    @link = Link.find_by(short_url: params[:short_url])
+    redirect_to '/' unless @link
   end
 
   # GET /1
@@ -27,18 +27,13 @@ class LinksController < ApplicationController
     @link = Link.new(link_params)
 
     if @link.save
-      redirect_to @link, notice: 'Link was successfully created.'
+      redirect_to link_path(short_url: @link.short_url), notice: 'Link was successfully created.'
     else
       render :new
     end
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_link
-    @link = Link.find(params[:id])
-  end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def link_params

@@ -31,13 +31,22 @@ RSpec.describe LinksController, type: :controller do
   end
 
   let(:invalid_link) do
-    create(:link_with_invalid_params)
+    build(:link_with_invalid_params)
   end
 
   describe 'GET #show' do
-    it 'returns a success response' do
-      get :show, params: { id: link.to_param }
-      expect(response).to be_successful
+    context 'when Link exists' do
+      it 'returns a success response' do
+        get :show, params: { short_url: link.short_url }
+        expect(response).to be_successful
+      end
+    end
+
+    context 'when there is no Link' do
+      it 'redirects to root page' do
+        get :show, params: { short_url: 'link.short_url' }
+        expect(response).to redirect_to('/')
+      end
     end
   end
 
@@ -65,7 +74,7 @@ RSpec.describe LinksController, type: :controller do
 
       it 'redirects to the created link' do
         post :create, params: { link: attributes_for(:link) }
-        expect(response).to redirect_to(Link.last)
+        expect(response).to redirect_to(link_path(Link.last.short_url))
       end
     end
 
