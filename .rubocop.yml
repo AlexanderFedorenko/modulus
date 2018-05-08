@@ -14,6 +14,7 @@ Metrics/LineLength:
     - 'Gemfile'
     - 'config/environments/**/*'
     - 'config/initializers/**/*'
+    - 'spec/**/*'
 
 Style/BlockComments:
   Enabled: false
