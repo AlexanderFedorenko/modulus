@@ -1,0 +1,31 @@
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
+  TargetRubyVersion: 2.5
+
+Rails:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 90
+  Exclude:
+    - 'Gemfile'
+    - 'config/environments/**/*'
+    - 'config/initializers/**/*'
+
+Style/BlockComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: when_needed
+
+Style/SymbolArray:
+  MinSize: 5
