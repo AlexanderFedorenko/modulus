@@ -80,6 +80,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
   database: modulus_production
   username: modulus
   password: <%= ENV['MODULUS_DATABASE_PASSWORD'] %>
