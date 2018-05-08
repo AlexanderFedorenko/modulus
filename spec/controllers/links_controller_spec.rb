@@ -26,35 +26,25 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe LinksController, type: :controller do
-  # This should return the minimal set of attributes required to create a valid
-  # Link. As you add validations to Link, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+  let(:link) do
+    create(:link)
   end
 
-  let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
-  end
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # LinksController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
-  describe 'GET #index' do
-    it 'returns a success response' do
-      link = Link.create! valid_attributes
-      get :index, params: {}, session: valid_session
-      expect(response).to be_success
-    end
+  let(:invalid_link) do
+    create(:link_with_invalid_params)
   end
 
   describe 'GET #show' do
     it 'returns a success response' do
-      link = Link.create! valid_attributes
       get :show, params: { id: link.to_param }
       expect(response).to be_successful
+    end
+  end
+
+  describe 'GET #visit' do
+    it 'redirects to the link origin' do
+      get :visit, params: { short_url: link.short_url }
+      expect(response).to redirect_to(link.url)
     end
   end
 
@@ -62,6 +52,28 @@ RSpec.describe LinksController, type: :controller do
     it 'returns a success response' do
       get :new, params: {}
       expect(response).to be_successful
+    end
+  end
+
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new Link' do
+        expect do
+          post :create, params: { link: attributes_for(:link) }
+        end.to change(Link, :count).by(1)
+      end
+
+      it 'redirects to the created link' do
+        post :create, params: { link: attributes_for(:link) }
+        expect(response).to redirect_to(Link.last)
+      end
+    end
+
+    context 'with invalid params' do
+      it 'returns a success response (i.e. to display the \'new\' template)' do
+        post :create, params: { link: attributes_for(:link_with_invalid_params) }
+        expect(response).to be_successful
+      end
     end
   end
 end
