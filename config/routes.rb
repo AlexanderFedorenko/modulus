@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   get '/:short_url', to: 'links#visit'
 
-  resources :links, only: [:create, :new, :show] , param: :short_url
+  resources :links, only: [:create, :new, :show], param: :short_url
 end

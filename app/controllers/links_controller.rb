@@ -27,7 +27,7 @@ class LinksController < ApplicationController
     @link = Link.new(link_params)
 
     if @link.save
-      redirect_to link_path(short_url: @link.short_url), notice: 'Link was successfully created.'
+      redirect_to link_path(short_url: @link.short_url), notice: 'Link was created.'
     else
       render :new
     end
