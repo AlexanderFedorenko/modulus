@@ -1,7 +1,11 @@
 FROM ruby:2.5
 
 # Install dependencies:
-RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev postgresql-client --fix-missing --no-install-recommends
+# - build-essential: To ensure certain gems can be compiled
+# - nodejs: Compile assets
+# - libpq-dev: Communicate with postgres through the postgres gem
+# - postgresql-client-9.4: In case you want to talk directly to postgres
+RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev postgresql-client-9.4 --fix-missing --no-install-recommends
 
 # Set an environment variable to store where the app is installed to inside
 # of the Docker image.
@@ -21,9 +25,10 @@ RUN bundle install
 COPY . .
 
 # Provide dummy data to Rails so it can pre-compile assets.
-RUN bundle exec rake RAILS_ENV=production DATABASE_URL=postgresql://user:pass@127.0.0.1/dbname SECRET_TOKEN=pickasecuretoken assets:precompile
+RUN bundle exec rails RAILS_ENV=production SECRET_TOKEN=pickasecuretoken assets:precompile
 
 # Expose a volume so that nginx will be able to read in assets in production.
 VOLUME ["$INSTALL_PATH/public"]
 
-CMD bundle exec rails s
+# The default command that gets ran will be to start the Unicorn server.
+CMD bundle exec rails s RAILS_ENV=production

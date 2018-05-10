@@ -33,14 +33,3 @@ module Modulus
     config.generators.system_tests = nil
   end
 end
-
-module Drkiq
-  class Application < Rails::Application
-    # We want to set up a custom logger which logs to STDOUT.
-    # Docker expects your application to log to STDOUT/STDERR and to be ran
-    # in the foreground.
-    config.log_level = :debug
-    config.log_tags  = [:request_id]
-    config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-  end
-end
