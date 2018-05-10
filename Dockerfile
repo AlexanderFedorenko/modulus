@@ -5,7 +5,7 @@ FROM ruby:2.5
 # - nodejs: Compile assets
 # - libpq-dev: Communicate with postgres through the postgres gem
 # - postgresql-client-9.4: In case you want to talk directly to postgres
-RUN apt-get update && apt-get install -qq -y build-essential nodejs libpq-dev postgresql-client-9.4 --fix-missing --no-install-recommends
+RUN apt-get update && apt-get install -qq -y build-essential libsqlite3-dev sqlite3 nodejs libpq-dev postgresql-client --fix-missing --no-install-recommends
 
 # Set an environment variable to store where the app is installed to inside
 # of the Docker image.
@@ -31,4 +31,4 @@ RUN bundle exec rails RAILS_ENV=production SECRET_TOKEN=pickasecuretoken assets:
 VOLUME ["$INSTALL_PATH/public"]
 
 # The default command that gets ran will be to start the Unicorn server.
-CMD bundle exec rails s RAILS_ENV=production
+CMD bundle exec unicorn -c config/unicorn.rb
